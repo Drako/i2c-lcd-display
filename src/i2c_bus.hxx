@@ -22,7 +22,7 @@ public:
 
     template<std::ranges::contiguous_range Range>
     int write_blocking(uint8_t const address, Range const &data, bool const no_stop = false) {
-        return write_blocking(address, data.data(), data.size(), no_stop);
+        return write_blocking(address, std::ranges::data(data), std::ranges::size(data), no_stop);
     }
 
 private:

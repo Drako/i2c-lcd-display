@@ -63,7 +63,7 @@ void I2cLcdDisplay::set_cursor(uint8_t const col, uint8_t const row) {
 void I2cLcdDisplay::expander_write(uint8_t const data) {
     constexpr uint8_t WITH_BACKLIGHT = 0x08;
     uint8_t const raw = data | WITH_BACKLIGHT;
-    i2c_.write_blocking(address_, &raw, 1, false);
+    i2c_.write_blocking(address_, raw);
 }
 
 void I2cLcdDisplay::pulse_enable(uint8_t const data) {
