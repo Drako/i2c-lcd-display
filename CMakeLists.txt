@@ -15,16 +15,17 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 pico_sdk_init()
+include(contrib/drakos-pico-extensions/drakos-pico-extensions.cmake)
 
 add_executable(i2c-lcd-display
         src/main.cxx
-        src/i2c_bus.cxx src/i2c_bus.hxx
         src/i2c_lcd_display.cxx src/i2c_lcd_display.hxx
         src/entropy.c
 )
 target_link_libraries(i2c-lcd-display PRIVATE
         pico_stdlib pico_stdio pico_time pico_cyw43_arch_none pico_rand
         hardware_gpio hardware_i2c
+        dpe_i2c dpe_led dpe_core
 )
 pico_enable_stdio_uart(i2c-lcd-display 0)
 pico_enable_stdio_usb(i2c-lcd-display 1)

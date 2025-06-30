@@ -1,6 +1,6 @@
 #pragma once
 
-#include "i2c_bus.hxx"
+#include <dpe/i2c_bus.hxx>
 
 #include <pico/types.h>
 
@@ -17,6 +17,8 @@ enum class LcdCommand : uint8_t {
 
 class I2cLcdDisplay final {
 public:
+    using I2cBus = dpe::i2c::I2cBus;
+
     I2cLcdDisplay(I2cBus &i2c, uint8_t address);
 
     void clear();
