@@ -21,6 +21,11 @@ I2cBus::~I2cBus() {
 }
 
 // ReSharper disable once CppMemberFunctionMayBeConst
+void I2cBus::set_baud_rate(uint const baud_rate) {
+    i2c_set_baudrate(i2c_, baud_rate);
+}
+
+// ReSharper disable once CppMemberFunctionMayBeConst
 int I2cBus::write_blocking(uint8_t const address, uint8_t const *const data, size_t const length, bool const no_stop) {
     return i2c_write_blocking(i2c_, address, data, length, no_stop);
 }

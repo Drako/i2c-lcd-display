@@ -16,6 +16,8 @@ namespace dpe::i2c {
 
         ~I2cBus();
 
+        void set_baud_rate(uint baud_rate = DEFAULT_BAUD_RATE);
+
         int write_blocking(uint8_t address, uint8_t const *data, size_t length, bool no_stop = false);
 
         int write_blocking(uint8_t const address, uint8_t const data, bool const no_stop = false) {

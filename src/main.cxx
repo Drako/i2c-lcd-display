@@ -25,7 +25,7 @@ using namespace dpe::led;
     stdio_init_all();
     sleep_ms(2'000u);
 
-    dpe::i2c::I2cBus bus{i2c0, I2C_SDA, I2C_SCL};
+    dpe::i2c::I2cBus bus{i2c0, I2C_SDA, I2C_SCL, 400'000u};
     I2cLcdDisplay lcd{bus, LCD_I2C_ADDRESS};
 
     led.on();
@@ -34,6 +34,22 @@ using namespace dpe::led;
     lcd.set_cursor(0, 1);
     lcd.print("How are you?");
 
+    sleep_ms(2'000u);
+
     for (;;) {
+        for (uint8_t address = 0x00; address < 0x80; ++address) {
+            if (bus.test(address)) {
+                char message_buffer[17];
+                sprintf(message_buffer, "address 0x%02X!", address);
+
+                lcd.clear();
+                lcd.home();
+                lcd.print("Found device at");
+                lcd.set_cursor(0, 1);
+                lcd.print(message_buffer);
+
+                sleep_ms(2'000u);
+            }
+        }
     }
 }
