@@ -3,6 +3,8 @@
 #include <pico/config.h>
 #include <pico/types.h>
 
+#include <hardware/gpio.h>
+
 #if __has_include(<pico/cyw43_arch.h>)
 #include <pico/cyw43_arch.h>
 #endif
