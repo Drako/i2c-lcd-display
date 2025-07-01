@@ -26,6 +26,17 @@ using namespace dpe::led;
     sleep_ms(2'000u);
 
     dpe::i2c::I2cBus bus{i2c0, I2C_SDA, I2C_SCL, 100'000u};
+    auto const found = bus.scan();
+    for (uint8_t address = 0x00; address < 0x80; ++address) {
+        if (found[address]) {
+            std::printf("Found device at address 0x%02X!\n", address);
+        }
+    }
+    if (!found[LCD_I2C_ADDRESS]) {
+        std::printf("I2C LCD not found!\n");
+        for (;;);
+    }
+
     I2cLcdDisplay lcd{bus, LCD_I2C_ADDRESS};
 
     led.on();
@@ -37,19 +48,5 @@ using namespace dpe::led;
     sleep_ms(2'000u);
 
     for (;;) {
-        for (uint8_t address = 0x00; address < 0x80; ++address) {
-            if (bus.test(address)) {
-                char message_buffer[17];
-                sprintf(message_buffer, "address 0x%02X!", address);
-
-                lcd.clear();
-                lcd.home();
-                lcd.print("Found device at");
-                lcd.set_cursor(0, 1);
-                lcd.print(message_buffer);
-
-                sleep_ms(2'000u);
-            }
-        }
     }
 }
